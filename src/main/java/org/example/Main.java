@@ -20,17 +20,18 @@ public class Main {
         Class randomClass;
         Graph graph = null;
 
+//      Using Reflection API to scan package org.example
         Reflections reflections = new Reflections("org.example");
         Set<Class<?>> typesAnnotatedWith = reflections.getTypesAnnotatedWith(Component.class);
         Singleton singleton = new Singleton();
-        ArrayList<Class> listOfClasses = new ArrayList<>();
+        ArrayList<Class> classes = new ArrayList<>();
 
-//        Getting all vertices which are classes to add in a tree
+//      Getting all vertices which are classes to add in a tree annotated with Component annotation
         for (Class c : typesAnnotatedWith) {
-            listOfClasses.add(c);
+            classes.add(c);
         }
-        graph = g.createGraph(listOfClasses);
-        randomClass = listOfClasses.get(0);
+        graph = g.createGraph(classes);
+        randomClass = classes.get(0); // getting random class from classes to traverse from
 
 //      Adding edges in tree for DFS traversal i.e: edges being classes
         for (Class c : typesAnnotatedWith) {
@@ -45,12 +46,11 @@ public class Main {
             }
         }
 
-//      Doing BFS in component with autowired annotation and returning DFS search result
+//      Doing DFS in component with autowired annotation and returning DFS search result
         List<Class> traversedListOfClasses = graphDFS.depthFirstTraversal(graph, randomClass);
         Collections.reverse(traversedListOfClasses);
         for (Class c : traversedListOfClasses) {
-            List<Vertex> adjVertices = graph.getAdjVertices(c);
-            singleton.makeInstance(c, adjVertices.size());
+            singleton.makeInstance(c);
         }
     }
 }

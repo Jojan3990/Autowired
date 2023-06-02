@@ -4,17 +4,19 @@ import org.example.Model.First;
 
 import java.util.*;
 
+// Code here can be optimized and I am working here
 public class GraphDFS {
     LinkedList<Class> visited = new LinkedList<>();
     List<Class> visitedDisconnectedVertices = new ArrayList<>();
     Stack<Object> stack = new Stack<>();
     List<Object> allVertices;
+    Object vertex;
 
     public List<Class> depthFirstTraversal(Graph graph, Object root) {
         allVertices = graph.getAllVertices();
         stack.push(root);
         while (!stack.isEmpty()) {
-            Object vertex = stack.pop();
+            vertex = stack.pop();
             allVertices.remove(vertex);
             if (!visited.contains(vertex)) {
                 visited.add((Class) vertex);
@@ -38,7 +40,7 @@ public class GraphDFS {
         Stack<Object> stack = new Stack<>();
         stack.push(root);
         while (!stack.isEmpty()) {
-            Object vertex = stack.pop();
+            vertex = stack.pop();
             allVertices.remove(vertex);
             if (!visited.contains(vertex)) {
                 visitedDisconnectedVertices.add((Class) vertex);
